@@ -63,6 +63,6 @@ jobs:
 
             docker compose pull app
 
-            docker compose up -d --no-deps --wait --wait-timeout 60 app
+            docker compose up -d  --wait --wait-timeout 60 app
 
             docker compose ps
