@@ -1,12 +1,15 @@
-name : deploy_on_dockerhub
+
+name: deploy_on_dockerhub
+
 on:
   push:
     branches:
       - main
- 
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,28 +30,39 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: indrama/nodewithts_cicd:${{ github.sha }}
-      - name: logout from DockerHub
+
+      - name: Logout from DockerHub
         run: docker logout
 
-      - name: connect to remote server
+      - name: Connect to remote server
         uses: appleboy/ssh-action@v0.1.5
+
         env:
-            ImageTag: ${{ github.sha }}
+          IMAGE_TAG: ${{ github.sha }}
+
         with:
-            host: ${{ secrets.EC2_HOST }}
-            username: ${{ secrets.EC2_USERNAME }}
-            key: ${{ secrets.EC2_SSH_KEY }}
-            envs: ImageTag
-            script: |
-                  set -e
-                   cd ~/nodewithts_cicd
-                   echo "Deploying image: $ImageTag"
-                  if grep -q '^ImageTag=' .env; then
-                  sed -i "s/^ImageTag=.*/ImageTag=$ImageTag/" .env
-                  else
-                  echo "ImageTag=$ImageTag" >> .env
-                   fi
-                   docker compose pull app
-                   docker compose up -d --no-deps --wait --wait-timeout 60 app
-                   docker compose ps
-        
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+
+          envs: IMAGE_TAG
+
+          script: |
+            set -e
+
+            cd ~/nodewithts_cicd
+
+            echo "Deploying image: $IMAGE_TAG"
+
+            if grep -q '^IMAGE_TAG=' .env; then
+              sed -i "s/^IMAGE_TAG=.*/IMAGE_TAG=$IMAGE_TAG/" .env
+            else
+              echo "IMAGE_TAG=$IMAGE_TAG" >> .env
+            fi
+
+            docker compose pull app
+
+            docker compose up -d --no-deps --wait --wait-timeout 60 app
+
+            docker compose ps
