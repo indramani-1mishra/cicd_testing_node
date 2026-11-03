@@ -1,6 +1,6 @@
 services:
   app:
-    image: indrama/nodewithts_cicd:${ImageTag}
+    image: indrama/nodewithts_cicd:${IMAGE_TAG}
     container_name: nodewithts_cicd
     ports:
       - "3000:3000"
