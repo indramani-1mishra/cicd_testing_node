@@ -12,9 +12,9 @@ app.use(express.json());
 
 // Basic GET route
 app.get('/', (req: Request, res: Response) => {
-  res.send('Welcome to your TypeScript Express Server!');
+  res.send('Welcome to your TypeScript Express Server! after a long time with a minor bug');
 });
-
+    
 // Basic API GET route returning JSON
 app.get('/api/health', (req: Request, res: Response) => {
 
