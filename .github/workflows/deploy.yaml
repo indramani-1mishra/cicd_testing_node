@@ -36,8 +36,8 @@ jobs:
             ImageTag: ${{ github.sha }}
         with:
             host: ${{ secrets.EC2_HOST }}
-            username: ${{ secrets.EC2_SSH_KEY }}
-            key: ${{ secrets.EC2_USERNAME }}
+            username: ${{ secrets.EC2_USERNAME }}
+            key: ${{ secrets.EC2_SSH_KEY }}
             envs: ImageTag
             script: |
                   set -e
