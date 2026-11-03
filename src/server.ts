@@ -17,7 +17,8 @@ app.get('/', (req: Request, res: Response) => {
 
 // Basic API GET route returning JSON
 app.get('/api/health', (req: Request, res: Response) => {
-  res.json({ status: 'OK', timestamp: new Date() });
+
+  res.json({ status: 'OK', timestamp: new Date() , message: 'Server is healthy' });
 });
 
 // Basic POST route
@@ -28,6 +29,8 @@ app.post('/api/data', (req: Request, res: Response) => {
     receivedData: body,
   });
 });
+
+
 
 // Start the server
 app.listen(PORT, () => {
