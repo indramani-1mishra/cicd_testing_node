@@ -35,9 +35,9 @@ jobs:
         env:
             ImageTag: ${{ github.sha }}
         with:
-            host: ${{ secrets.REMOTE_HOST }}
-            username: ${{ secrets.REMOTE_USERNAME }}
-            password: ${{ secrets.REMOTE_PASSWORD }}
+            host: ${{ secrets.EC2_HOST }}
+            username: ${{ secrets.EC2_SSH_KEY }}
+            password: ${{ secrets.EC2_USERNAME }}
             envs: ImageTag
             script: |
                   set -e
